@@ -1,0 +1,35 @@
+
+// common box
+.sect(@ow:100%;@iw:1200px){
+    &>.sect{
+        width: @ow;
+        .cont{
+            width:@iw;
+            margin: 0 auto;
+        }
+    }
+}
+
+// 设置同背景图一样的高度
+.setBgImgHeight(@num;){
+    @url:'../img/bg_@{num}.jpg';
+    .sect_@{num}{
+        height: image-height(@url);
+        background: url(@url)  no-repeat center top;
+        &>.cont_@{num}{
+            height: image-height(@url);
+        }
+    }
+}
+
+// 循环生成
+.loopSetStyle(@num) when (@num > 0){
+    .loopSetStyle((@num - 1)); // 递归
+    .setBgImgHeight(@num);
+}
+
+// init
+.init(@siw:1200px;@n){
+    .sect(@iw:@siw);
+    .loopSetStyle(@num:@n);
+}
